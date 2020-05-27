@@ -30,6 +30,7 @@ products = [
 
 # TODO: write some Python code here to produce the desired output
 
+# I imported the price function to let every item get a $ next to the price
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
@@ -40,19 +41,31 @@ def to_usd(my_price):
     """
     return f"${my_price:,.2f}" #> $12,000.71
 
+# the below code counts the number of products in the provded data and uses that count to print a title
+# the code iterates through the data to pull out products from the provided dictionaries along with the corresponding price
 count = len(products)
 print("------------")
-print("THERE ARE {} PRODUCTS:".format(count))
+print(f"THERE ARE {count} PRODUCTS:")
 print("------------")
-for prod in products:
-    insta = "+ " + prod["name"] + " " + "(" + str(to_usd(prod["price"])) + ")"
-    print(insta)
 
-#need a full list of items
+products2 = [prod["name"] + " " + "(" + str(to_usd(prod["price"])) + ")" for prod in products]
+products2.sort()
+#I've added a sort method to make the result be sorted alphabetically 
+for prod in products2:
+    products_final = "+ " + prod
+    print(products_final)
+
+#need a separate list with only the items from Department
+#I've added a sort method to tailor the eventual output to be sorted alphabetically
 list = [prod["department"] for prod in products]
-#need a unique list of items
+list.sort()
+#need a unique list of items so we can use that list remove duplicate entries from dept_list
 unique_list = []
+#dept_list is supposed to be a list that contains each item as a string that reads the Department and the number of products
+# all list items must be unique
 dept_list = []
+# the below code iterates through all departments, counts how many times each department appears
+# Each iteration prints one string for each department, with the total count of how many times each department appears
 for li in list:
     if li in unique_list:
         continue
@@ -63,8 +76,9 @@ for li in list:
             dept_list.append("+ " + str(li.title()) + " (" + str(count) + " Product)")
         else:
             dept_list.append("+ " + str(li.title()) + " (" + str(count) + " Products)")
+count_ul = len(unique_list)
 print("-----------")
-print("THERE ARE {} DEPARTMENTS:".format(len(unique_list)))
+print(f"THERE ARE {count_ul} DEPARTMENTS:")
 print("-----------")
 for de in dept_list:
     print(de)
